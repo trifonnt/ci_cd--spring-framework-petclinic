@@ -1,4 +1,4 @@
-Getting started with Docker for Java applications & Setting up CI/CD pipeline
+# Getting started with Docker for Java applications & Setting up CI/CD pipeline
 
 Docker is already became quite famous and more organizations are moving to Docker based application development and deployment.
 Here is a quick guide on how to containerize an existing Java web application and setup an end to end deployment pipeline for it
@@ -7,7 +7,7 @@ using Jenkins.
 I am using the very famous Spring based petstore application for this and it represents a good sample as most of the applications
 follow similar architecture.
 
-Here are the steps
+### Here are the steps
 
 1) Build the Petstore application
 2) Run Sonar quality check on this
@@ -18,7 +18,7 @@ Here are the steps
 All the code is available in this location
 
 The Jenkins pipeline code which can be used for the above steps are 
-
+```
 node {
     stage 'checkout'
     git 'https://gitlab.com/RavisankarCts/hello-world.git' 
@@ -51,7 +51,7 @@ node {
         image.push()
     }
 }
-
+```
 
 The initial steps just checksout the code and run the build. The interesting part starts in
 step 3 'bake image'
