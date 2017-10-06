@@ -20,13 +20,13 @@ All the code is available in this location
 The Jenkins pipeline code which can be used for the above steps are 
 ```
 node {
-    #### stage 'checkout'
+    stage 'checkout'
     git 'https://gitlab.com/RavisankarCts/hello-world.git' 
     
-    #### stage 'build'
+    stage 'build'
     sh 'mvn clean install'
     
-    #### stage('Results - 1') {
+    stage('Results - 1') {
          junit '**/target/surefire-reports/TEST-*.xml'
          archive 'target/*.jar'
         }
