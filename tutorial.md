@@ -53,21 +53,27 @@ node {
 }
 ```
 
-The initial steps just checksout the code and run the build. The interesting part starts in
+The initial steps just checksout the code and run the build. The interesting part starts with this step runs with in Docker context using docker hub credentials
 ```
 step 3 'bake image'
 docker.withRegistry('https://registry.hub.docker.com','docker-hub-credentials') 
 ```
-this step runs with in Docker context
 
 This step builds the docker image. Docker build command takes the your docker hub repository name and the tag name as one argument and your build location is another argument.
 ```
 def image = docker.build("dockerhub registry name":"tag name",'location of docker file'). 
 def image = docker.build("ravisankar/ravisankardevops:${env.BUILD_TAG}",'.')
 ```
-This uses the Dockerfile to build the docker image. The contents of the docker file is here
+This uses the Dockerfile to build the docker image. The contents of the docker file
+
+```
+FROM tomcat:8
+
+ADD target/*.war /usr/local/tomcat/webapps
+```
 
 Next step is to run the image and run tests on it.
+
 ```
 stage 'test image'
         image.withRun('-p 8888:8888') { springboot ->
@@ -81,3 +87,13 @@ can be exposed. I have another test code base which is built and executed which 
 that is running.
 
 Final step is pushing the image to Dockerhub registry or any internal registry setup in your organization.
+
+```
+stage('Results') {
+         junit '**/target/surefire-reports/TEST-*.xml'
+         archive 'target/*.jar'
+        }
+        
+        stage 'push image'
+        image.push()
+```
