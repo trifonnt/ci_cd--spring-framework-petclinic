@@ -17,7 +17,7 @@ node {
         stage 'test image'
         image.withRun('-p 8888:8888') {springboot ->
         sh 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
-        git 'https://github.com/RavisankarCts/petclinicacceptance.git'
+        git 'https://github.com/trifonnt/ci_cd--pet-clinic-acceptance-test.git'
         sh 'mvn clean verify'
         }
         
